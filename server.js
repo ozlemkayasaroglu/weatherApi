@@ -8,7 +8,13 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "true",
+    methods: ["GET"],
+    credentials: true,
+  })
+);
 
 app.get("/weather", async (req, res) => {
   const city = req.query.city;
@@ -16,7 +22,7 @@ app.get("/weather", async (req, res) => {
     return res.status(400).json({ error: "Lütfen bir şehir adı girin." });
   }
 
-  const API_KEY = process.env.WEATHER_API_KEY;
+  const API_KEY = process.env.KEY;
   const API_URL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${API_KEY}`;
 
   try {
